@@ -1,6 +1,6 @@
 # MarketNest - Multi-Vendor Marketplace
 
-A production-ready multi-vendor marketplace platform with booking engine, Stripe Connect payments, vendor storefronts, reviews, admin panel, and email notifications.
+A multi-vendor marketplace with a booking engine, Stripe Connect payments, vendor storefronts, reviews, admin panel, and email notifications.
 
 ## 🎯 Overview
 
@@ -264,29 +264,31 @@ Access frontend: `http://localhost:5173`
 
 ## 🧪 Testing
 
-Currently includes:
-- Domain entity definitions with validation rules
-- CQRS handler specifications
-- Repository interface contracts
-- API endpoint contracts (Swagger)
+There is no automated test suite yet. Current checks:
 
-Future additions:
-- Unit tests for business logic
-- Integration tests for API endpoints
-- E2E tests for critical workflows
+```bash
+dotnet build                                  # backend: 0 errors
+cd client && npm run typecheck && npm run build   # frontend: 0 type errors, production bundle builds
+```
+
+Validation rules live in FluentValidation validators wired into a MediatR pipeline behaviour, so every command is validated before its handler runs.
+
+Planned:
+- Unit tests for the CQRS handlers (booking overlap, cancellation windows, dispute resolution)
+- Integration tests for the API against PostgreSQL in Testcontainers
+- E2E tests for the booking and payment flow
 
 ## 🚢 Deployment
 
-### Docker Production Build
+### Docker
+
+`docker-compose.yml` runs PostgreSQL, Redis and the API (built from `src/MarketNest.API/Dockerfile`):
 
 ```bash
-# Build images
-docker build -f src/MarketNest.API/Dockerfile -t marketnest-api:1.0 .
-docker build -f client/Dockerfile -t marketnest-client:1.0 .
-
-# Run production compose
-docker-compose -f docker-compose.prod.yml up -d
+docker-compose up -d --build
 ```
+
+The client is a static Vite build (`client/dist`) and can be served from any static host. A production compose file and a client image are on the roadmap.
 
 ### Environment Variables
 
@@ -330,11 +332,11 @@ http://localhost:5000/swagger
 
 ## 📄 License
 
-MIT License - see LICENSE file for details
+MIT, see [LICENSE](LICENSE).
 
 ## 👨‍💻 Author
 
-Created as a comprehensive marketplace platform demonstrating:
+Built by Faseeh Ullah Jafar as a portfolio project demonstrating:
 - Clean Architecture principles
 - CQRS pattern implementation
 - Full-stack development (C# + React)
@@ -348,6 +350,6 @@ Created as a comprehensive marketplace platform demonstrating:
 
 Pull requests welcome! Please ensure:
 - Code follows conventions
-- Tests pass
+- `dotnet build` and `npm run typecheck` pass
 - Documentation is updated
 - Commits follow conventional commit format

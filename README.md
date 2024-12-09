@@ -9,7 +9,7 @@ MarketNest is a full-stack marketplace application enabling vendors to list serv
 ## 🛠️ Tech Stack
 
 ### Backend
-- **.NET 10** - Modern C# framework with Clean Architecture
+- **.NET 9** - Modern C# framework with Clean Architecture
 - **Entity Framework Core 9** - ORM for PostgreSQL
 - **MediatR** - CQRS pattern implementation
 - **AutoMapper** - Object mapping
@@ -61,7 +61,7 @@ MarketNest/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 10 SDK
+- .NET 9 SDK
 - Node.js 20+ and npm
 - Docker Desktop
 - Git
